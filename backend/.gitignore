@@ -1,0 +1,15 @@
+# dependencies
+/node_modules
+
+# environment variables
+.env
+
+# logs
+*.log
+
+# IDEs
+.vscode
+.DS_Store
+
+# uploads (optional)
+uploads/

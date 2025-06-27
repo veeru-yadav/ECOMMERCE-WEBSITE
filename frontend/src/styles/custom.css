@@ -1,0 +1,15 @@
+/* styles/custom.css */
+
+.button-glow {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #3b82f6;
+  transition: all 0.3s ease-in-out;
+}
+
+.button-glow:hover {
+  box-shadow: 0 0 20px #3b82f6;
+}
