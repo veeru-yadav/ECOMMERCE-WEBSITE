@@ -46,7 +46,7 @@ const Navbar = () => {
             {user ? (
               <>
                 <li className="nav-item">
-                  <span className="nav-link fw-semibold">Hi, {user.name}</span>
+                  <span className="nav-link fw-semibold">Hi, {user.email}</span>
                 </li>
                 <li className="nav-item">
                   <button className="btn btn-outline-light btn-sm ms-2" onClick={handleLogout}>
