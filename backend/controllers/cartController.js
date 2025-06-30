@@ -40,3 +40,30 @@ exports.removeFromCart = async (req, res) => {
     res.status(500).json({ error: 'Failed to remove item' });
   }
 };
+
+// PATCH /api/cart/:productId
+exports.updateCartQuantity = async (req, res) => {
+  const { productId } = req.params;
+  const { quantity } = req.body;
+  const userId = req.user.id;
+
+  try {
+    const cartItem = await Cart.findOne({ where: { userId, productId } });
+
+    if (!cartItem) {
+      return res.status(404).json({ error: 'Cart item not found' });
+    }
+
+    // Prevent 0 or negative quantity
+    if (quantity < 1) {
+      return res.status(400).json({ error: 'Quantity must be at least 1' });
+    }
+
+    cartItem.quantity = quantity;
+    await cartItem.save();
+
+    res.json({ message: 'Quantity updated', cartItem });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update quantity' });
+  }
+};
