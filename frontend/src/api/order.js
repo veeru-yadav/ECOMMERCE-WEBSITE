@@ -1,0 +1,22 @@
+import API from '../services/api';
+
+export const placeOrder = async (token) => {
+  const res = await API.post('/order', {}, {
+    headers: { Authorization: token }
+  });
+  return res.data;
+};
+
+export const getOrderById = async (orderId, token) => {
+  const res = await API.get(`/order/${orderId}`, {
+    headers: { Authorization: token }
+  });
+  return res.data;
+};
+
+export const getUserOrders = async (token) => {
+  const res = await API.get('/my-orders', {
+    headers: { Authorization: token }
+  });
+  return res.data;
+};

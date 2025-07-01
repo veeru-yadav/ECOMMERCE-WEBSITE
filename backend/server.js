@@ -2,11 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const sequelize = require('./config/db');
 const User = require('./models/UserModel'); // import model
-const Product = require('./models/productModel');
+const Product = require('./models/ProductModel');
 const Cart = require('./models/CartModel');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const cartRoutes = require('./routes/cartRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
 require('dotenv').config();
 
@@ -29,6 +30,9 @@ app.use('/api/products', productRoutes);
 
 //cart
 app.use('/api', cartRoutes);
+
+//order
+app.use('/api', orderRoutes);
 
 const protectedRoutes = require('./routes/protectedRoutes');
 app.use('/api/protected', protectedRoutes);

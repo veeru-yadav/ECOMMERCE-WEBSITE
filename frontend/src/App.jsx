@@ -7,6 +7,8 @@ import Products from './pages/Products';
 import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute';
 import Cart from './pages/Cart';
+import OrderSuccess from './pages/OrderSuccess';
+import UserOrders from './pages/UserOrders';
 
 function App() {
   return (
@@ -22,6 +24,9 @@ function App() {
        {/* More routes later */}
        <Route path="/admin/add-product" element={<AddProduct />} />
        <Route path="/products" element={<Products />} />
+       <Route path="/order-success" element={<OrderSuccess />} />
+       <Route path="/my-orders" element={<PrivateRoute><UserOrders /></PrivateRoute>} />
+       
       </Routes>
     </div>
 

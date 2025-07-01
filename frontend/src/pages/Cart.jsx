@@ -1,13 +1,31 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
+import API from '../services/api';
+import { useNavigate } from 'react-router-dom';
+import { placeOrder } from '../api/order';
+import { useAuth } from '../context/AuthContext';
 
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity } = useCart();
+  const { token } = useAuth();
+  const navigate = useNavigate();
 
   const total = cartItems.reduce(
     (acc, item) => acc + item.Product.price * item.quantity,
     0
   );
+
+  const handleCheckout = async () => {
+  try {
+    const res = await placeOrder(token);
+    navigate('/order-success', { state: { orderId: res.orderId } });
+  } catch (err) {
+    console.error('Checkout error:', err);
+    alert('❌ Failed to place order. Please try again.');
+  }
+};
+
+
 
   if (cartItems.length === 0) {
     return <div className="container mt-5 text-center"><h3>Your cart is empty 🛒</h3></div>;
@@ -65,7 +83,7 @@ const Cart = () => {
 
       <div className="text-end mt-4">
         <h4>Total: ₹{total.toFixed(2)}</h4>
-        <button className="btn btn-primary mt-2">Proceed to Checkout</button>
+        <button className="btn btn-primary mt-2" onClick={handleCheckout}>Proceed to Checkout</button>
       </div>
     </div>
   );

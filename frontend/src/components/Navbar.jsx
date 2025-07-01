@@ -45,6 +45,11 @@ const Navbar = () => {
           <ul className="navbar-nav ms-auto">
             {user ? (
               <>
+                {user && (
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/my-orders">My Orders</Link>
+                  </li>
+                )}
                 <li className="nav-item">
                   <span className="nav-link fw-semibold">Hi, {user.email}</span>
                 </li>
@@ -64,6 +69,7 @@ const Navbar = () => {
                 </li>
               </>
             )}
+
           </ul>
         </div>
       </div>

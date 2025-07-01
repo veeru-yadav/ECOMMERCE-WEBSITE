@@ -1,4 +1,4 @@
-// backend/models/productModel.js
+
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db'); // Sequelize instance
 
