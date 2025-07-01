@@ -20,3 +20,10 @@ export const getUserOrders = async (token) => {
   });
   return res.data;
 };
+
+export const cancelOrder = async (orderId, token) => {
+  const res = await API.patch(`/cancel/${orderId}`, null, {
+    headers: { Authorization: token }
+  });
+  return res.data;
+};

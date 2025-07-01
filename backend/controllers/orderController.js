@@ -75,7 +75,7 @@ exports.getOrderDetails = async (req, res) => {
 };
 
 
-//nnnnnnnnnnnnnn
+
 exports.getUserOrders = async (req, res) => {
   const userId = req.user.id;
   try {
@@ -96,3 +96,29 @@ exports.getUserOrders = async (req, res) => {
     res.status(500).json({ error: '❌ Failed to fetch user orders' });
   }
 };
+
+exports.cancelOrder = async (req, res) => {
+  const userId = req.user.id;
+  const { orderId } = req.params;
+
+  try {
+    const order = await Order.findOne({ where: { id: orderId, userId } });
+
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    if (order.status === 'Cancelled') {
+      return res.status(400).json({ error: 'Order is already cancelled' });
+    }
+
+    order.status = 'Cancelled';
+    await order.save();
+
+    res.json({ message: '✅ Order cancelled successfully' });
+  } catch (err) {
+    console.error('Cancel order error:', err);
+    res.status(500).json({ error: '❌ Failed to cancel order' });
+  }
+};
+

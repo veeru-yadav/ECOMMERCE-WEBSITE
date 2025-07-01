@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { getUserOrders } from '../api/order';
+import { getUserOrders, cancelOrder } from '../api/order';
 import { useAuth } from '../context/AuthContext';
 
 const UserOrders = () => {
   const [orders, setOrders] = useState([]);
   const { token } = useAuth();
 
+  const handleCancel = async (orderId) => {
+    if (!window.confirm('Are you sure you want to cancel this order?')) return;
+    try {
+      await cancelOrder(orderId, token);
+      await fetchOrders(); // Refresh the list
+    } catch (err) {
+      console.error('Cancel failed:', err);
+    }
+  };
+
+  const fetchOrders = async () => {
+    try {
+      const res = await getUserOrders(token);
+      setOrders(res);
+    } catch (err) {
+      console.error('Failed to fetch orders:', err);
+    }
+  };
+
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const res = await getUserOrders(token);
-        setOrders(res);
-      } catch (err) {
-        console.error('Failed to fetch orders:', err);
-      }
-    };
 
     if (token) fetchOrders();
   }, [token]);
@@ -40,6 +51,18 @@ const UserOrders = () => {
                 </div>
               ))}
             </div>
+
+            {order.status === 'Pending' && (
+              <div className="text-end mt-3">
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={() => handleCancel(order.id)}
+                >
+                  Cancel Order
+                </button>
+              </div>
+            )}
+
           </div>
         ))
       )}
