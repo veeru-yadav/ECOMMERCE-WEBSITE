@@ -1,7 +1,9 @@
-//import axios from 'axios';
+
 import API from '../services/api';
-export const addProduct = async (productData) => {
-  return await API.post('/products', productData);
+
+
+export const addProduct = async (productData, config) => {
+  return await API.post('/products', productData, config);
 };
 
 export const getProducts = async () => {

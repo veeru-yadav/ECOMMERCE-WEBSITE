@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getUserOrders, cancelOrder } from '../api/order';
 import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const UserOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -38,31 +39,32 @@ const UserOrders = () => {
       ) : (
         orders.map(order => (
           <div key={order.id} className="card mb-4 shadow-sm p-3">
-            <h5>Order #{order.id}</h5>
-            <p>Total: ₹{order.totalAmount}</p>
-            <p>Status: <strong>{order.status}</strong></p>
-            <p>Placed on: {new Date(order.createdAt).toLocaleDateString()}</p>
+            <Link to={`/order/${order.id}`}  className="text-dark text-decoration-none">
+              <h5>Order #{order.id}</h5>
+              <p>Total: ₹{order.totalAmount}</p>
+              <p>Status: <strong>{order.status}</strong></p>
+              <p>Placed on: {new Date(order.createdAt).toLocaleDateString()}</p>
 
-            <div className="mt-3">
-              <h6>Items:</h6>
-              {order.items.map(item => (
-                <div key={item.id} className="mb-2 border-bottom pb-2">
-                  <strong>{item.product.name}</strong> — Qty: {item.quantity} — ₹{item.product.price}
-                </div>
-              ))}
-            </div>
-
-            {order.status === 'Pending' && (
-              <div className="text-end mt-3">
-                <button
-                  className="btn btn-outline-danger"
-                  onClick={() => handleCancel(order.id)}
-                >
-                  Cancel Order
-                </button>
+              <div className="mt-3">
+                <h6>Items:</h6>
+                {order.items.map(item => (
+                  <div key={item.id} className="mb-2 border-bottom pb-2">
+                    <strong>{item.product.name}</strong> — Qty: {item.quantity} — ₹{item.product.price}
+                  </div>
+                ))}
               </div>
-            )}
 
+              {order.status === 'Pending' && (
+                <div className="text-end mt-3">
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={() => handleCancel(order.id)}
+                  >
+                    Cancel Order
+                  </button>
+                </div>
+              )}
+            </Link>
           </div>
         ))
       )}

@@ -9,6 +9,7 @@ import PrivateRoute from './components/PrivateRoute';
 import Cart from './pages/Cart';
 import OrderSuccess from './pages/OrderSuccess';
 import UserOrders from './pages/UserOrders';
+import OrderDetails from './pages/OrderDetails';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
        <Route path="/products" element={<Products />} />
        <Route path="/order-success" element={<OrderSuccess />} />
        <Route path="/my-orders" element={<PrivateRoute><UserOrders /></PrivateRoute>} />
+       <Route path="/order/:orderId" element={<PrivateRoute><OrderDetails /></PrivateRoute>} />
        
       </Routes>
     </div>

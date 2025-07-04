@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { addProduct } from '../../api/productApi';
+import { useAuth } from '../../context/AuthContext';
 
 const AddProduct = () => {
+  const { token } = useAuth();
+
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+
   const [formData, setFormData] = useState({
     name: '',
     price: '',
     description: '',
-    image: '',
     category: ''
   });
 
@@ -19,18 +24,44 @@ const AddProduct = () => {
     }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));//set preview
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await addProduct(formData);
+      const data = new FormData();
+      data.append('name', formData.name);
+      data.append('price', formData.price);
+      data.append('description', formData.description);
+      data.append('category', formData.category);
+      if (imageFile) {
+        data.append('image', imageFile);
+      }
+
+      const config = {
+        headers: {
+          Authorization: `${token}`,
+          'Content-Type': 'multipart/form-data',
+        }
+      };
+
+      await addProduct(data, config);
       setMessage('✅ Product added successfully!');
+      
+      // Reset form
       setFormData({
         name: '',
         price: '',
         description: '',
-        image: '',
         category: ''
       });
+      setImageFile(null);
+      setImagePreview(null);
     } catch (error) {
       console.error('Add product error:', error);
       setMessage('❌ Failed to add product');
@@ -41,7 +72,8 @@ const AddProduct = () => {
     <div className="container mt-5" style={{ maxWidth: '600px' }}>
       <h2 className="mb-4">Add Product</h2>
       {message && <div className="alert alert-info">{message}</div>}
-      <form onSubmit={handleSubmit}>
+
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="mb-3">
           <label className="form-label">Product Name</label>
           <input type="text" className="form-control" name="name" value={formData.name} onChange={handleChange} required />
@@ -58,8 +90,14 @@ const AddProduct = () => {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Image URL</label>
-          <input type="text" className="form-control" name="image" value={formData.image} onChange={handleChange} required />
+          <label className="form-label">Image</label>
+          <input type="file" className="form-control" accept="image/*" onChange={handleImageChange} required />
+          {imagePreview && (
+            <div className="mt-3">
+              <p>Preview:</p>
+              <img src={imagePreview} alt="Preview" width="150" className="img-thumbnail" />
+            </div>
+          )}
         </div>
 
         <div className="mb-3">

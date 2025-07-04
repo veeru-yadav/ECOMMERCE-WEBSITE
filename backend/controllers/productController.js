@@ -1,29 +1,34 @@
 
 const Product = require('../models/ProductModel');
+const path = require('path');
 
 // Create Product
 exports.addProduct = async (req, res) => {
   try {
-    const { name, price, description, image, category } = req.body;
+    const { name, price, description, category } = req.body;
+    const imageFile = req.file;
 
-    if (!name || !price || !description || !image || !category) {
-      return res.status(400).json({ error: 'All fields are required.' });
+    if (!imageFile) {
+      return res.status(400).json({ error: '❌ No image file uploaded' });
     }
 
-    const newProduct = await Product.create({
+    const imageUrl = `/assets/${imageFile.filename}`; // Save relative path
+
+    const product = await Product.create({
       name,
       price,
       description,
-      image,
+      image: imageUrl,
       category
     });
 
-    res.status(201).json({ message: 'Product created successfully', product: newProduct });
-  } catch (error) {
-    console.error('Error adding product:', error);
-    res.status(500).json({ error: 'Server error while adding product' });
+    res.status(201).json({ message: '✅ Product created successfully', product });
+  } catch (err) {
+    console.error('Error adding product:', err);
+    res.status(500).json({ error: '❌ Failed to add product' });
   }
 };
+
 
 // Get All Products
 exports.getAllProducts = async (req, res) => {

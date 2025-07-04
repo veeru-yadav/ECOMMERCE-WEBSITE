@@ -7,7 +7,7 @@ export const placeOrder = async (token) => {
   return res.data;
 };
 
-export const getOrderById = async (orderId, token) => {
+export const getOrderDetails = async (orderId, token) => {
   const res = await API.get(`/order/${orderId}`, {
     headers: { Authorization: token }
   });

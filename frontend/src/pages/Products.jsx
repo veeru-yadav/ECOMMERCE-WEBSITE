@@ -10,6 +10,9 @@ const Products = () => {
       try {
         const res = await API.get('/products');
         setProducts(res.data);
+        
+        //console.log('Fetched products:', res.data); // 👈 Log whole product array
+
       } catch (err) {
         console.error('Failed to fetch products', err);
       }

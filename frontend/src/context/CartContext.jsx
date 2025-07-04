@@ -30,7 +30,6 @@ export const CartProvider = ({ children }) => {
   // Add item to cart
   const addToCart = async (productId, quantity = 1) => {
     try {
-      console.log(productId);
       await API.post('/cart', { productId, quantity }, config);
       // Fetch latest cart
       const res = await API.get('/cart', config);

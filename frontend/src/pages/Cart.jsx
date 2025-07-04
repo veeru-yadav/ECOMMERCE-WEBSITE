@@ -38,7 +38,7 @@ const Cart = () => {
         <div key={item.id} className="card mb-3 shadow-sm p-3">
           <div className="row align-items-center">
             <div className="col-md-2">
-              <img src={item.Product.image} alt={item.Product.name} className="img-fluid rounded" />
+              <img src={`${import.meta.env.VITE_API_URL}${item.Product.image}`} alt={item.Product.name} className="img-fluid rounded" />
             </div>
             <div className="col-md-6">
               <h5>{item.Product.name}</h5>
