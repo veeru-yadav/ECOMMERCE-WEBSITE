@@ -18,7 +18,16 @@ const User = sequelize.define('User', {
   role: {
     type: DataTypes.STRING,
     defaultValue: 'user'  // for future admin/user roles
+  },
+  photo: {
+    type: DataTypes.STRING,
+    defaultValue: '/assets/default-user.png'
+  },
+  shippingAddress: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 });
 
 module.exports = User;
+

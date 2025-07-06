@@ -10,6 +10,7 @@ import Cart from './pages/Cart';
 import OrderSuccess from './pages/OrderSuccess';
 import UserOrders from './pages/UserOrders';
 import OrderDetails from './pages/OrderDetails';
+import UserProfile from './pages/User/UserProfile';
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
        <Route path="/order-success" element={<OrderSuccess />} />
        <Route path="/my-orders" element={<PrivateRoute><UserOrders /></PrivateRoute>} />
        <Route path="/order/:orderId" element={<PrivateRoute><OrderDetails /></PrivateRoute>} />
-       
+       <Route path="/profile" element={<PrivateRoute> <UserProfile /> </PrivateRoute>} />
+
       </Routes>
     </div>
 

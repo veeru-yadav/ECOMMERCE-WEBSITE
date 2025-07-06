@@ -12,5 +12,16 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
+const fileFilter = (req, file, cb) => {
+  const ext = path.extname(file.originalname).toLowerCase();
+  if (ext === '.jpg' || ext === '.jpeg' || ext === '.png') {
+    cb(null, true);
+  } else {
+    cb(new Error('Only JPG, JPEG, PNG files are allowed'), false);
+  }
+};
+
+const upload = multer({ storage ,fileFilter });
+
 module.exports = upload;
+
