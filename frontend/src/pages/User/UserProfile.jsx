@@ -65,6 +65,7 @@ const UserProfile = () => {
           'Content-Type': 'multipart/form-data'
         }
       });
+      
       setMessage('✅ Profile updated successfully!');
     } catch (err) {
       setMessage('❌ Update failed');
@@ -102,7 +103,7 @@ const UserProfile = () => {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label className="form-label">Profile Photo</label>
-          <input type="file" className="form-control" onChange={handlePhotoChange} accept="image/*" />
+          <input type="file" name="photo" className="form-control" onChange={handlePhotoChange} accept="image/*" />
         </div>
 
         <div className="mb-3">

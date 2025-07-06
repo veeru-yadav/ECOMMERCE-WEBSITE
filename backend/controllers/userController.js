@@ -6,6 +6,7 @@ const path = require('path');
 // Update profile details (name, email, password, address, photo)
 exports.updateUserProfile = async (req, res) => {
   try {
+
     const userId = req.user.id;
 
     const { name, email, password, shippingAddress } = req.body;
@@ -24,19 +25,25 @@ exports.updateUserProfile = async (req, res) => {
           }
         });
 
-        user.photo = `/assets/${req.file.filename}`; // Save new photo path
       }
+      user.photo = `/assets/${req.file.filename}`; // Save new photo path
+      
     }
-    else{
-        user.photo = user.photo;
+    else {
+      user.photo = user.photo;
     }
 
     // Step 2: Update other fields (if provided)
+    if (password) {
+      user.password = await bcrypt.hash(password, 10);
+    }
+    else {
+      user.password = user.password;
+    }
     user.name = name || user.name;
     user.email = email || user.email;
-    user.password = password || user.password;
     user.shippingAddress = shippingAddress || user.shippingAddress;
-    
+
     await user.save();
 
     res.json({ message: 'Profile updated successfully', user });

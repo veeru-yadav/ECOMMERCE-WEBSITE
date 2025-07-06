@@ -42,7 +42,7 @@ const Navbar = () => {
               <>
                 
                 <li className="nav-item">
-                  <span className="nav-link fw-semibold">Hi, {user.email}</span>
+                  <span className="nav-link fw-semibold">Hi, {user.name}</span>
                 </li>
                 <li className="nav-item">
                   <Link to="/profile" className="nav-link">Profile</Link>
