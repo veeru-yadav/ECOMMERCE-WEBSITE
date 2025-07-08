@@ -102,7 +102,13 @@ const AddProduct = () => {
 
         <div className="mb-3">
           <label className="form-label">Category</label>
-          <input type="text" className="form-control" name="category" value={formData.category} onChange={handleChange} required />
+          <select name="category" className="form-select" value={formData.category} onChange={handleChange}>
+            <option value="">Select</option>
+            <option value="men">Men</option>
+            <option value="women">Women</option>
+            <option value="kids">Kids</option>
+            <option value="god">God</option>
+          </select>
         </div>
 
         <button type="submit" className="btn btn-primary w-100">Add Product</button>

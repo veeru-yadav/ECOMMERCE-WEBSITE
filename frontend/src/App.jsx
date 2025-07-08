@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import AddProduct from './pages/Admin/AddProduct';
+import AdminRoutes from './admin/index';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -24,13 +24,13 @@ function App() {
        <Route path="/register" element={<Register />} />
        <Route path="/cart" element={ <PrivateRoute> <Cart /> </PrivateRoute> } />
        {/* More routes later */}
-       <Route path="/admin/add-product" element={<AddProduct />} />
+       
        <Route path="/products" element={<Products />} />
        <Route path="/order-success" element={<OrderSuccess />} />
        <Route path="/my-orders" element={<PrivateRoute><UserOrders /></PrivateRoute>} />
        <Route path="/order/:orderId" element={<PrivateRoute><OrderDetails /></PrivateRoute>} />
        <Route path="/profile" element={<PrivateRoute> <UserProfile /> </PrivateRoute>} />
-
+       <Route path="/admin/*" element={<AdminRoutes />} />
       </Routes>
     </div>
 
