@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import API from '../../services/api';
+import BackButton from '../../components/BackButton';
 
 const UpdateProduct = () => {
   const { id } = useParams(); // Get product ID from route
@@ -55,12 +56,13 @@ const UpdateProduct = () => {
 
     try {
       await API.put(`/products/${id}`, formData, {
-        headers: { Authorization: token,
-          'Content-Type': 'multipart/form-data' 
+        headers: {
+          Authorization: token,
+          'Content-Type': 'multipart/form-data'
         },
       });
       alert('Product updated successfully!');
-      navigate('/admin/delete-product'); // redirect to product list
+      navigate('/admin/edit-product'); // redirect to product list
     } catch (err) {
       console.error('Update failed', err);
       alert('Failed to update product');
@@ -69,7 +71,10 @@ const UpdateProduct = () => {
 
   return (
     <div className="container mt-4">
-      <h3 className="mb-4">Update Product</h3>
+      <div className='d-flex justify-content-between'>
+        <h2 className="mb-4">Update Product</h2>
+        <BackButton className="float-end" />
+      </div>
 
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="mb-3">

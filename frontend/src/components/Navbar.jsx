@@ -40,14 +40,21 @@ const Navbar = () => {
           <ul className="navbar-nav ms-auto">
             {user ? (
               <>
-                
+                {user && user.role === 'admin' && (
+                  <li className="nav-item">
+                    <Link to="/admin" className="btn btn-warning me-2">
+                      Admin Action
+                    </Link>
+                  </li>
+                )}
+
                 <li className="nav-item">
                   <span className="nav-link fw-semibold">Hi, {user.name}</span>
                 </li>
                 <li className="nav-item">
                   <Link to="/profile" className="nav-link">Profile</Link>
                 </li>
-                
+
               </>
             ) : (
               <>

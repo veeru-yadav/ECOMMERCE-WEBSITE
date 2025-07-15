@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../../services/api'; // ✅ use correct admin path if needed
 import { useAuth } from '../../context/AuthContext';
-
+import BackButton from '../../components/BackButton';
 
 const DeleteProduct = () => {
   const { token } = useAuth();
@@ -40,7 +40,10 @@ const DeleteProduct = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-4">Delete Products</h2>
+      <div className='d-flex justify-content-between'>
+        <h2 className="mb-4">Delete Products</h2>
+        <BackButton className="float-end" />
+      </div>
       {message && <div className="alert alert-info">{message}</div>}
 
       <div className="row">
@@ -59,7 +62,7 @@ const DeleteProduct = () => {
                 <div className="card-body">
                   <h5 className="card-title">{product.name}</h5>
                   <p className="card-text">₹{product.price}</p>
-                  
+
                   <button
                     className="btn btn-primary w-100 mt-2"
                     onClick={() => navigate(`/admin/update-product/${product.id}`)}
@@ -72,7 +75,7 @@ const DeleteProduct = () => {
                   >
                     Delete
                   </button>
-                  
+
                 </div>
               </div>
             </div>

@@ -11,6 +11,8 @@ import OrderSuccess from './pages/OrderSuccess';
 import UserOrders from './pages/UserOrders';
 import OrderDetails from './pages/OrderDetails';
 import UserProfile from './pages/User/UserProfile';
+import FilterPage from './pages/FilterPage';
+
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
        {/* More routes later */}
        
        <Route path="/products" element={<Products />} />
+       <Route path="/filter" element={<FilterPage />} />
        <Route path="/order-success" element={<OrderSuccess />} />
        <Route path="/my-orders" element={<PrivateRoute><UserOrders /></PrivateRoute>} />
        <Route path="/order/:orderId" element={<PrivateRoute><OrderDetails /></PrivateRoute>} />

@@ -9,6 +9,7 @@ const productRoutes = require('./routes/productRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const userRoutes = require('./routes/userRoutes');
+const adminOrderRoutes = require('./routes/adminOrderRoutes');
 
 const path = require('path');
 
@@ -34,6 +35,9 @@ app.get('/', (req, res) => {
 
 //authentication
 app.use('/api/auth',authRoutes);
+
+//Admin Order Routes
+app.use('/api/admin', adminOrderRoutes);
 
 //User profile
 app.use('/api/user', userRoutes);

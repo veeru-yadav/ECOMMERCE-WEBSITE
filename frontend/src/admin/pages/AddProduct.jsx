@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { addProduct } from '../../api/productApi';
 import { useAuth } from '../../context/AuthContext';
+import BackButton from '../../components/BackButton';
 
 const AddProduct = () => {
   const { token } = useAuth();
@@ -52,7 +53,7 @@ const AddProduct = () => {
 
       await addProduct(data, config);
       setMessage('✅ Product added successfully!');
-      
+
       // Reset form
       setFormData({
         name: '',
@@ -70,7 +71,10 @@ const AddProduct = () => {
 
   return (
     <div className="container mt-5" style={{ maxWidth: '600px' }}>
-      <h2 className="mb-4">Add Product</h2>
+      <div className='d-flex justify-content-between'>
+        <h2 className="mb-4">Add Product</h2>
+        <BackButton className="float-end" />
+      </div>
       {message && <div className="alert alert-info">{message}</div>}
 
       <form onSubmit={handleSubmit} encType="multipart/form-data">

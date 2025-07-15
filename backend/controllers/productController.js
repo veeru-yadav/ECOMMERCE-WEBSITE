@@ -1,5 +1,7 @@
 
 const Product = require('../models/ProductModel');
+const Cart = require('../models/CartModel'); // Import Cart model
+
 const path = require('path');
 const fs = require('fs');
 // Create Product
@@ -33,11 +35,34 @@ exports.addProduct = async (req, res) => {
 // Get All Products
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.findAll();
+    const { category, limit, sort } = req.query;
+    const query = {};
+
+    // Category filter
+    if (category) {
+      query.category = category.toLowerCase();
+    }
+
+    // Sort condition
+    let order = [];
+    if (sort === 'newest') {
+      order.push(['createdAt', 'DESC']);
+    } else if (sort === 'low') {
+      order.push(['price', 'ASC']);
+    } else if (sort === 'high') {
+      order.push(['price', 'DESC']);
+    }
+
+    const products = await Product.findAll({
+      where: query,
+      order,
+      limit: limit ? parseInt(limit) : undefined,
+    });
+
     res.json(products);
   } catch (error) {
-    console.error('Error fetching products:', error);
-    res.status(500).json({ error: 'Failed to retrieve products' });
+    console.error('Failed to fetch products:', error);
+    res.status(500).json({ message: 'Failed to fetch products' });
   }
 };
 
@@ -63,6 +88,7 @@ exports.deleteProduct = async (req, res) => {
     const product = await Product.findByPk(productId);
     if (!product) return res.status(404).json({ message: 'Product not found' });
 
+    
     // Remove associated image from assets (if not default)
     if (product.image && product.image !== '/assets/default.jpg') {
       const imagePath = path.join(__dirname, '..', 'public', product.image);

@@ -4,6 +4,7 @@ import API from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { placeOrder } from '../api/order';
 import { useAuth } from '../context/AuthContext';
+import BackButton from '../components/BackButton';
 
 const Cart = () => {
   const { cartItems, removeFromCart, updateQuantity } = useCart();
@@ -16,14 +17,14 @@ const Cart = () => {
   );
 
   const handleCheckout = async () => {
-  try {
-    const res = await placeOrder(token);
-    navigate('/order-success', { state: { orderId: res.orderId } });
-  } catch (err) {
-    console.error('Checkout error:', err);
-    alert('❌ Failed to place order. Please try again.');
-  }
-};
+    try {
+      const res = await placeOrder(token);
+      navigate('/order-success', { state: { orderId: res.orderId } });
+    } catch (err) {
+      console.error('Checkout error:', err);
+      alert('❌ Failed to place order. Please try again.');
+    }
+  };
 
 
 
@@ -33,7 +34,10 @@ const Cart = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-4">🛒 Your Cart</h2>
+      <div className='d-flex justify-content-between'>
+        <h2 className="mb-4">🛒 Your Cart</h2>
+        <BackButton className="float-end" />
+      </div>
       {cartItems.map((item) => (
         <div key={item.id} className="card mb-3 shadow-sm p-3">
           <div className="row align-items-center">
