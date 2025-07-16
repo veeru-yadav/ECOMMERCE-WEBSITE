@@ -88,6 +88,7 @@ exports.deleteProduct = async (req, res) => {
     const product = await Product.findByPk(productId);
     if (!product) return res.status(404).json({ message: 'Product not found' });
 
+    await product.destroy();
     
     // Remove associated image from assets (if not default)
     if (product.image && product.image !== '/assets/default.jpg') {
@@ -101,7 +102,7 @@ exports.deleteProduct = async (req, res) => {
       });
     }
 
-    await product.destroy();
+    
     res.json({ message: 'Product deleted successfully' });
   } catch (err) {
     console.error('Error deleting product:', err.message);
