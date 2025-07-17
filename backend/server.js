@@ -64,18 +64,16 @@ app.use('/api/protected', protectedRoutes);
 sequelize.authenticate()
   .then(() => {
     console.log('MySQL connected...');
+    return sequelize.sync({ alter: true }); // wait for sync before starting server
+  })
+  .then(() => {
+    console.log('All models synced.');
     app.listen(process.env.PORT, () => {
       console.log(`Server running on http://localhost:${process.env.PORT}`);
     });
   })
-  .catch(err => console.log('DB connection error:', err));
-
-sequelize.sync({ alter: true }) // sync DB
-  .then(() => {
-    console.log('All models synced.');
-  })
-  .catch((err) => {
-    console.error('Error syncing models:', err);
+  .catch(err => {
+    console.error('DB connection error:', err);
   });
 
 
