@@ -79,7 +79,7 @@ const Home = () => {
       {/* Women */}
       <h3 className="mt-5 mb-4">👗 Women's Collection</h3>
       <div className="row">
-        {woman.map(renderProductCard)}
+        {women.map(renderProductCard)}
       </div>
 
       {/* Kids */}
