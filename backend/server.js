@@ -19,7 +19,7 @@ const app = express();
 
 // Middleware
 const allowedOrigins = [
-  'http://localhost:3000',
+  'http://localhost:5173',
   'https://ecommerce-swart-eight-93.vercel.app'
 ];
 
