@@ -109,9 +109,9 @@ const AddProduct = () => {
           <select name="category" className="form-select" value={formData.category} onChange={handleChange}>
             <option value="">Select</option>
             <option value="men">Men</option>
-            <option value="women">Women</option>
+            <option value="women">Woman</option>
             <option value="kids">Kids</option>
-            <option value="god">God</option>
+            
           </select>
         </div>
 

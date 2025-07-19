@@ -34,7 +34,7 @@ const Home = () => {
     <div className="col-sm-6 col-md-4 col-lg-3 mb-4" key={product.id}>
       <div className="card h-100 shadow-sm">
         <img
-          src={`http://localhost:5000${product.image}`}
+          src={`${import.meta.env.VITE_API_URL}${product.image}`}
           className="card-img-top"
           alt={product.name}
           style={{ height: '200px', objectFit: 'cover' }}
@@ -79,7 +79,7 @@ const Home = () => {
       {/* Women */}
       <h3 className="mt-5 mb-4">👗 Women's Collection</h3>
       <div className="row">
-        {women.map(renderProductCard)}
+        {woman.map(renderProductCard)}
       </div>
 
       {/* Kids */}
